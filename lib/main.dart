@@ -1,3 +1,4 @@
+import 'package:animated_bottom_bar/animated_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const AnimatedBar(),
     );
   }
 }
@@ -34,6 +35,13 @@ class _AnimatedBarState extends State<AnimatedBar> {
   Color active = Colors.blue;
   Color inactive = Colors.black;
 
+  List name = [
+    "Home",
+    "Dashboard",
+    "Security",
+    "Person",
+  ];
+
   @override
   Widget build(BuildContext context) {
     double mediaQH = MediaQuery.of(context).size.height;
@@ -43,39 +51,46 @@ class _AnimatedBarState extends State<AnimatedBar> {
         height: mediaQH,
         width: mediaQW,
         color: Colors.white.withOpacity(0.9),
-        child: AnimatedBottomBar(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(),
+            Text(name[select]),
+            AnimatedBottomBar(
 
-          width: mediaQW,
+              width: mediaQW -30,
 
-          height: mediaQH*0.1,
+              height: mediaQH*0.085,
 
-          selectedIndex: select,
+              selectedIndex: select,
 
-          items: [
+              items: [
 
-            AnimatedBarItem(
-              icon: Icon(Icons.home),
+                AnimatedBarItem(
+                  icon: const Icon(Icons.home),
+                ),
+
+                AnimatedBarItem(
+                  icon: const Icon(Icons.dashboard),
+                ),
+
+                AnimatedBarItem(
+                  icon: const Icon(Icons.safety_check),
+                ),
+
+                AnimatedBarItem(
+                  icon: const Icon(Icons.person),
+                ),
+
+              ],
+              onItemSelected: (_){
+                setState((){
+                  select = _;
+                });
+              },
             ),
-
-            AnimatedBarItem(
-              icon: Icon(Icons.dashboard),
-            ),
-
-            AnimatedBarItem(
-              icon: Icon(Icons.safety_check),
-            ),
-
-            AnimatedBarItem(
-              icon: Icon(Icons.person),
-            ),
-
           ],
-          onItemSelected: (_){
-            setState((){
-              select = _;
-            });
-            print(select);
-          },
         ),
       ),
     );
